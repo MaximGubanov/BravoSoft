@@ -20,9 +20,6 @@ export const DocList = () => {
     const docs = useSelector(state => state.docs.docs)
     const users = useSelector(state => state.users.users)
 
-    // const key = 'subscribe_workers'
-    // const sortedDocs = docs.sort((doc1, doc2) => doc1[key].length < doc2[key].length ? 1 : -1)
-
     return (
         <div className="flex-row">
             <div className="flex-column">

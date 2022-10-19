@@ -63,7 +63,11 @@ app.get('/docs', async (req, res) => {
             subscribe_workers: true
         },
     })
-    res.json(docs)
+    
+    const key = 'subscribe_workers'
+    const sortedDocs = docs.sort((doc1, doc2) => doc1[key].length < doc2[key].length ? 1 : -1)
+    
+    res.json(sortedDocs)
 })
 
 app.get(`/doc/:id`, async (req, res) => {
