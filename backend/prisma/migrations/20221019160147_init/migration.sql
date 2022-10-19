@@ -23,6 +23,7 @@ CREATE TABLE "Document" (
 
 -- CreateTable
 CREATE TABLE "DocumentOnUser" (
+    "id" SERIAL NOT NULL,
     "user_id" INTEGER NOT NULL,
     "doc_id" INTEGER NOT NULL,
 

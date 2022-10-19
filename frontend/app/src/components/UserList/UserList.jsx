@@ -21,7 +21,7 @@ const UserItem = ({user}) => {
                 {user.surname}
             </td>
             <td>
-                <span><a href='#'>Удалить</a></span>
+                <span><a href="http://">Удалить</a></span>
             </td>
         </tr>
     )

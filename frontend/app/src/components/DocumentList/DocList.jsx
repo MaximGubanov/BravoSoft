@@ -1,18 +1,28 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import './style.css'
 import { DocumentForm } from '../Forms/DocForms'
+import { CreateDocumentForm } from '../Forms/CreateDocForm'
+import { deleteDocument } from '../../redux/docsSlice'
 
 
 const DocItem = ({doc}) => {
+    const dispatch = useDispatch()
+
+    function del() {
+        dispatch(deleteDocument(doc.id))
+    }
+    
     return (
         <tr>
             <td>{doc.id}</td>
             <td>{doc.title}</td>
             <td>{doc.description}</td>
             <td>{doc.subscribe_workers.length}</td>
-            <td><span><a>Удалить</a></span></td>
+            {/* <td><span><a href="" onClick={del}>Удалить</a></span></td> */}
+            <td><span><Link to='/' onClick={del}>Удалить</Link></span></td>
         </tr>
     )
 }
@@ -38,6 +48,7 @@ export const DocList = () => {
                     { docs.map((doc) => <DocItem doc={doc} key={doc.id} />) }
                 </tbody>
             </table>
+            <CreateDocumentForm />
         </div>
     )
 }

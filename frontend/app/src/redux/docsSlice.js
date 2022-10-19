@@ -24,11 +24,51 @@ export const makeRequestDoc = createAsyncThunk(
     async function ({user_id, doc_id}, {rejectWithValue, dispatch}) {
         try {
             const data = await axios.post('http://localhost:4000/request-a-doc',
-                    {'user_id': user_id, 'doc_id': doc_id},
+                    {
+                        'user_id': user_id, 
+                        'doc_id': doc_id
+                    },
                     {headers},
                 )
                 .then(response => response.data)
                 .catch(error => console.log(error))
+                dispatch(fetchDocuments())
+                return data
+        } catch (error) {
+            return rejectWithValue(error.message)
+        }
+    }
+)
+
+export const createDocument = createAsyncThunk(
+    'docs/createDocument',
+    async function ({user_id, doc_title}, {rejectWithValue, dispatch}) {
+        try {
+            const data = await axios.post('http://localhost:4000/doc',
+                    {
+                        'title': doc_title, 
+                        'created_by': user_id
+                    },
+                    {headers},
+                )
+                .then(response => response.data)
+                .catch(error => console.log(error))
+                dispatch(fetchDocuments())
+                return data
+        } catch (error) {
+            return rejectWithValue(error.message)
+        }
+    }
+)
+
+export const deleteDocument = createAsyncThunk(
+    'docs/deleteDocument',
+    async function (id, {rejectWithValue, dispatch}) {
+        try {
+            const data = await axios.put(`http://localhost:4000/doc/${id}`, {headers})
+                .then(response => response.data)
+                .catch(error => console.log(error))
+                dispatch(fetchDocuments())
                 return data
         } catch (error) {
             return rejectWithValue(error.message)
@@ -53,10 +93,21 @@ const docsSlice = createSlice({
             state.status = 'resolved'
             state.docs = actions.payload
         },
-        [fetchDocuments.rejected]: (state, actions) => {},
+        [fetchDocuments.rejected]: (state, actions) => {
+            // в доработке
+            alert('Непредвиденная ошибка')
+        },
         [makeRequestDoc.fulfilled]: (state, actions) => {
             alert(actions.payload.message)
         },
+        [makeRequestDoc.rejected]: () => {
+            // в доработке
+            alert('Непредвиденная ошибка')
+        },
+        [createDocument.fulfilled]: (state, actions) => {
+            alert(actions.payload.message)
+        },
+        [deleteDocument.fulfilled]: (state, actions) => {},
     }
 })
 

@@ -3,25 +3,24 @@ import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import './style.css'
-import { makeRequestDoc } from '../../redux/docsSlice'
+import { createDocument } from '../../redux/docsSlice'
 
 
-export const DocumentForm = () => {
+export const CreateDocumentForm = () => {
 
     const [userID, setUserID] = useState('')
-    const [docID, setDocID] = useState('')
+    const [docTitle, setDocTitle] = useState('')
     const dispatch = useDispatch()
     const users = useSelector(state => state.users.users)
-    const docs = useSelector(state => state.docs.docs)
 
     function handleChange(event, setValue) {
         setValue(event.target.value)
     }
 
     function handleSubmit(event) {
-        if (userID !== undefined && docID !== undefined) {
-            dispatch(makeRequestDoc({user_id: userID, doc_id: docID}))
-            console.log({user_id: userID, doc_id: docID})
+        if (userID !== undefined && docTitle !== undefined) {
+            dispatch(createDocument({user_id: userID, doc_title: docTitle}))
+            console.log({user_id: userID, doc_title: docTitle})
         } else {
             alert('Заполните все поля')
         }
@@ -38,16 +37,15 @@ export const DocumentForm = () => {
                                 {`${user.firstname} ${user.lastname} ${user.surname}`}
                     </option>) }
             </select>
+            
+            <input 
+                name="title" 
+                value={docTitle} 
+                onChange={(event) => handleChange(event, setDocTitle)} 
+                placeholder="Введите название документа"
+            />
 
-            <select name="title" value={docID} onChange={(event) => handleChange(event, setDocID)}>
-                <option defaultValue={undefined}>Выберете документ</option>
-                { docs.map(doc => 
-                    <option value={doc.id} key={doc.id}>
-                        {`${doc.title}`}
-                    </option>) }
-            </select>
-
-            <button type="submit">Сделать заявку</button>
+            <button type="submit">Создать документ</button>
 
         </form>
     )

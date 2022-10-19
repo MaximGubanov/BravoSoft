@@ -20,6 +20,11 @@ export const fetchUsers = createAsyncThunk(
     }
 )
 
+export const deleteUser = createAsyncThunk(
+    'users/deleteUser',
+    
+)
+
 const usersSlice = createSlice({
     name: 'users',
     initialState: {

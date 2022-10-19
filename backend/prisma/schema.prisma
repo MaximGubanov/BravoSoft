@@ -25,13 +25,14 @@ model Document {
   title             String
   description       String?
   created_at        DateTime          @default(now())
-  user              User?              @relation(fields: [created_by], references: [id])
+  user              User?             @relation(fields: [created_by], references: [id])
   created_by        Int?
   is_active         Boolean           @default(true)
   subscribe_workers DocumentOnUser[]
 }
 
 model DocumentOnUser {
+  id        Int       @default(autoincrement())
   user      User      @relation(fields: [user_id], references: [id])
   user_id   Int
   document  Document  @relation(fields: [doc_id], references: [id])

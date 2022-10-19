@@ -25,8 +25,23 @@ app.post('/user', async (req, res) => {
     }
 })
 
+app.delete('/user/:id', async (req, res) => {
+    const { id } = req.params
+    const user = await prisma.user.update({
+        where: {id: Number(id)},
+        data: {
+            is_active: false
+        },
+        include: {'subscribe_docs': true},
+    })
+
+    res.json(user)
+})
+
 app.get('/users', async (req, res) => {
-    const users = await prisma.user.findMany()
+    const users = await prisma.user.findMany({
+        where: {is_active: true}
+    })
     res.json(users)
 })
 
@@ -59,6 +74,9 @@ app.post('/doc', async (req, res) => {
 
 app.get('/docs', async (req, res) => {
     const docs = await prisma.document.findMany({
+        where: {
+            is_active: true
+        },
         include: {
             subscribe_workers: true
         },
@@ -84,7 +102,7 @@ app.get(`/doc/:id`, async (req, res) => {
 })
 
 // не жёсткое удаление документов, просто деактивируем
-app.put('/doc/:id', async (req, res) => {
+app.put(`/doc/:id`, async (req, res) => {
     const { id } = req.params
     const doc = await prisma.document.update({
         where: { id: Number(id) },
@@ -126,6 +144,7 @@ app.post('/request-a-doc', async (req, res) => {
         res.json({message: 'Непредвиденная ошибка'})
     }
 })
+
 
 app.listen(PORT, () =>
   console.log(`REST API server ready at: http://localhost:${PORT}`),
