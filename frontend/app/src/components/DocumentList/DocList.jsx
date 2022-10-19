@@ -12,6 +12,7 @@ const DocItem = ({doc}) => {
             <td>{doc.title}</td>
             <td>{doc.description}</td>
             <td>{doc.subscribe_workers.length}</td>
+            <td><span><a>Удалить</a></span></td>
         </tr>
     )
 }
@@ -21,10 +22,8 @@ export const DocList = () => {
     const users = useSelector(state => state.users.users)
 
     return (
-        <div className="flex-row">
-            <div className="flex-column">
-                <DocForms users={ users } />
-            </div>
+        <div className="flex-column">
+            <DocForms users={ users } />
             <table>
                 <thead>
                     <tr>
@@ -32,6 +31,7 @@ export const DocList = () => {
                         <th>Наименование</th>
                         <th>Описание</th>
                         <th>Кол-во запросов</th>
+                        <th>Удалить документ</th>
                     </tr>
                 </thead>
                 <tbody>

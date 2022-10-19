@@ -33,22 +33,21 @@ export class UserForms extends React.Component {
     render () {
         return (
             <form onSubmit={(event) => this.handleSubmit(event)}>
-                <label>Регистрация пользователя</label><br/><br/>
                 <input type='text' placeholder="Имя" 
                     name="firstname" 
                     value={this.state.firstname} 
                     onChange={(event)=>this.handleChange(event)} 
-                /><br/><br/>
+                /><br/>
                 <input type='text' placeholder="Отчество" 
                     name="lastname" 
                     value={this.state.lastname} 
                     onChange={(event)=>this.handleChange(event)} 
-                /><br/><br/>
+                />
                 <input type='text' placeholder="Отчество" 
                     name="surname" 
                     value={this.state.surname} 
                     onChange={(event)=>this.handleChange(event)} 
-                /><br/><br/>
+                />
                 <button type="submit">Создать</button>
             </form>
         )

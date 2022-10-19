@@ -5,11 +5,27 @@
 
 .flex-column {
     display: flex;
-    gap: 4rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
 }
 
-table {border: 1px solid;}
+table {
+    border: 1px solid;
+    text-align: center;
+}
 
 th {border: 1px solid grey;}
 
 td {border: 1px solid grey;}
+
+tr {
+    transition: all 0.2s linear 0s;
+}
+tr:hover {
+    background-color: rgb(223, 223, 255);
+    transition: all 0.2s linear 0s;
+}
+
+span {cursor: pointer;}
+span a:hover {color: red;} 

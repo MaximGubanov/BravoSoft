@@ -32,21 +32,21 @@ export class DocForms extends React.Component {
 
     render () {
         return (
-            <from onSubmit={(event) => this.handleSubmit(event)}>
-                <label>Выберете пользователя</label><br/>
+            <form onSubmit={(event) => this.handleSubmit(event)}>
                 <select name="id" value={this.state.id} onChange={(event)=>this.handleChange(event)}>
+                    <option selected>Выберете пользователя</option>
                     {this.props.users.map(user => 
                         <option value={user.id} key={user.id}>
                             {`${user.firstname} ${user.lastname} ${user.surname}`}
                         </option>)}
-                </select><br/><br/>
+                </select><br/>
                 <input type='text' placeholder="Название документа" 
                     name="title" 
                     value={this.state.title} 
                     onChange={(event)=>this.handleChange(event)} 
-                /><br/><br/>
+                /><br/>
                 <button type="submit">Создать заявку</button>
-            </from>
+            </form>
         )
     }
 }

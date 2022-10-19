@@ -20,6 +20,9 @@ const UserItem = ({user}) => {
             <td>
                 {user.surname}
             </td>
+            <td>
+                <span><a href='#'>Удалить</a></span>
+            </td>
         </tr>
     )
 }
@@ -28,7 +31,7 @@ export const UserList = () => {
     const users = useSelector(state => state.users.users)
     
     return (
-        <div className="flex-row">
+        <div className="flex-column" >
             <UserForms />
             <table>
                 <thead>
@@ -37,6 +40,7 @@ export const UserList = () => {
                         <th>Имя</th>
                         <th>Отчество</th>
                         <th>Фамилия</th>
+                        <th>Удалить пользователя</th>
                     </tr>
                 </thead>
                 <tbody>

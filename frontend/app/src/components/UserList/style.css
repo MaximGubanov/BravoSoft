@@ -1,7 +1,19 @@
-.flex-row {display: flex;}
+table {
+    width: 90%;
+    text-align: center;
+    border-collapse: collapse;
+    border: 0;
+}
 
-table {border: 1px solid;}
+th {
+    border: 0;
+    padding: 1.5rem;
+    border-bottom: 1px solid #ddd;
+}
 
-th {border: 1px solid grey;}
 
-td {border: 1px solid grey;}
+td {
+    border: 0;
+    border-bottom: 1px solid #ddd;
+    padding: .5rem;
+}

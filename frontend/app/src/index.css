@@ -32,7 +32,8 @@ html,body{
 input,button,textarea{font-family:inherit;}
 
 input::-ms-clear{display: none;}
-button{cursor: pointer;}
+button{cursor: pointer; transition: all 0.2s linear 0s;}
+button:hover{background-color: rgb(69, 69, 251); transition: all 0.2s linear 0s;}
 button::-moz-focus-inner {padding:0;border:0;}
 a {color: #7D71D8; text-decoration: none;}
 a, a:visited{text-decoration: none;}
