@@ -2,8 +2,8 @@ import React from "react"
 import styled from "styled-components"
 import { Outlet } from "react-router-dom"
 
-import { Container } from "./Container"
-import { Header } from "./Header"
+import { Container } from './Container'
+import { Header } from './Header/Header'
 
 
 const Main = styled.div`

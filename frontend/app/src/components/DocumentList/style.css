@@ -1,0 +1,15 @@
+.flex-row {
+    display: flex;
+    gap: 2rem;
+}
+
+.flex-column {
+    display: flex;
+    gap: 4rem;
+}
+
+table {border: 1px solid;}
+
+th {border: 1px solid grey;}
+
+td {border: 1px solid grey;}

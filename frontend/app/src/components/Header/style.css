@@ -1,0 +1,27 @@
+.header {
+    padding: 20px 10px;
+    background: #3F278A;
+    font-size: lager;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    gap: 1rem;
+}
+
+a {
+    color: #AF99F5;
+    transition: all 0.3s linear 0.1s;
+}
+
+a:hover {
+    color: #FBE991;
+    transition: all 0.3s linear 0.1s;
+}

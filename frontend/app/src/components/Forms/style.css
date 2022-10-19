@@ -1,0 +1,26 @@
+form {
+    width: 400px;
+    margin-right: 2rem;
+}
+
+input {
+    width: 100%;
+    border: 1px solid blue;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+button {
+    width: 200px;
+    color: white;
+    background: blue;
+    border-radius: 4px;
+    padding: 6px;
+}
+
+select {
+    width: 100%;
+    border: 1px solid blue;
+    border-radius: 4px;
+    padding: 4px;
+}

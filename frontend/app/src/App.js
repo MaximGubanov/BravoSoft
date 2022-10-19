@@ -1,77 +1,35 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import axios from 'axios'
 
-import { Layout } from "./components/Layout"
-import { UserList } from "./components/Home"
-import { TableRequiests } from './components/Table'
+import { Layout } from './components/Layout'
+import { DocList } from './components/DocumentList/DocList'
+import { UserList } from './components/UserList/UserList'
+import { fetchDocuments } from './redux/docsSlice'
+import { fetchUsers } from './redux/usersSlice'
 
 
-class App extends React.Component {
+function App () {
 
-  constructor(props) {
-    
-      super(props)
-      
-      this.state = {
-        'docs': [],
-        'users': [],
-      }
-  }
+  const dispath = useDispatch()
 
-  async getUsers() {
-    try {
-        const data = await axios.get('http://localhost:4000/users')
-            .then(response => {
-                this.setState({
-                  'users': response.data
-                })
-            })
-            .catch(error => {
-                console.log(error)
-                return error
-            })
-        return data
-    } catch(err) {
-        console.log(err.message)
-    }
-  }
+  useEffect(() => {
+    dispath(fetchDocuments())
+  }, [dispath])
 
-  async getData() {
-    try {
-      const data = await axios.get('http://localhost:4000/docs')
-          .then(response => {
-              this.setState({
-                'docs': response.data
-              })
-          })
-          .catch(error => {
-              console.log(error)
-              return error
-          })
-      return data
-    } catch(err) {
-        console.log(err.message)
-    }
-  }
+  useEffect(() => {
+    dispath(fetchUsers())
+  }, [dispath])
 
-  componentDidMount() {
-    this.getUsers()
-    this.getData()
-  }
-
-  render () {
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={ <Layout/> }>
-            <Route index element={<TableRequiests docs={ this.state.docs } users={ this.state.users } />} />
-            <Route path='/users' element={<UserList users={ this.state.users } />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    )
-  }
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={ <Layout /> }>
+          <Route index element={ <DocList /> } />
+          <Route path='/users' element={ <UserList /> } />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  )
 }
-
 export default App
