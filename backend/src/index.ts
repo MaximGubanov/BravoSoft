@@ -94,36 +94,36 @@ app.put('/doc/:id', async (req, res) => {
 })
 
 app.post('/request-a-doc', async (req, res) => {
-    const { id, title } = req.body
+    const { user_id, doc_id } = req.body
     
     try {
         const document = await prisma.document.findFirst({
-            where: { title: String(title) },
+            where: { id: Number(doc_id) },
             include: {
                 subscribe_workers: true
             }
         })
         
         if (document == null) {
-            res.json({error: `Документ ${title} не существует`})
+            res.json({message: `Такой документ не существует`})
         }
 
         const subscribers = document?.subscribe_workers
-        const subscriber = subscribers?.filter(item => item.user_id == id)
+        const subscriber = subscribers?.filter(item => item.user_id == user_id)
         
         if (subscriber?.length) {
             res.json({message: 'Вы уже делали заявку на этот документ'})
         } else {
             const result = await prisma.documentOnUser.create({
                 data: {
-                    user_id: Number(id),
+                    user_id: Number(user_id),
                     doc_id: Number(document?.id)
                 }
             })
             res.json({message: 'Заявка успешно создана', result: result})
         }
     } catch(e) {
-        res.json({error: 'Непредвиденная ошибка'})
+        res.json({message: 'Непредвиденная ошибка'})
     }
 })
 

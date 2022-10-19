@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import './style.css'
-import { DocForms } from '../Forms/DocForms'
+import { DocumentForm } from '../Forms/DocForms'
 
 
 const DocItem = ({doc}) => {
@@ -23,7 +23,7 @@ export const DocList = () => {
 
     return (
         <div className="flex-column">
-            <DocForms users={ users } />
+            <DocumentForm users={ users } />
             <table>
                 <thead>
                     <tr>

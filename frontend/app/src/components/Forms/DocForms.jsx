@@ -1,52 +1,54 @@
 import React from 'react'
-import axios from 'axios'
+import { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
 import './style.css'
+import { makeRequestDoc } from '../../redux/docsSlice'
 
 
-export class DocForms extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-                id: '', 
-                title: '',
-            }
+export const DocumentForm = () => {
+
+    const [userID, setUserID] = useState('')
+    const [docID, setDocID] = useState('')
+    const dispatch = useDispatch()
+    const users = useSelector(state => state.users.users)
+    const docs = useSelector(state => state.docs.docs)
+
+    function handleChange(event, setValue) {
+        setValue(event.target.value)
     }
 
-    handleChange(event) {
-        this.setState(
-            { [event.target.name]: event.target.value }
-        )
+    function handleSubmit(event) {
+        if (userID && docID) {
+            dispatch(makeRequestDoc({user_id: userID, doc_id: docID}))
+            console.log({user_id: userID, doc_id: docID})
+        } else {
+            alert('Заполните все поля')
+        }
+        event.preventDefault()
     }
 
-    async handleSubmit() {     
-        axios.post('http://localhost:4000/request-a-doc', {
-            'id': this.state.id,
-            'title': this.state.title
-        })
-        .then(response => alert(response.data.message))
-        .catch(e => console.log(e))
+    return (
+        <form onSubmit={(event) => handleSubmit(event)}>
 
-        console.log(this.state.id, this.state.title)
-    }
+            <select name="id" value={userID} onChange={(event) => handleChange(event, setUserID)}>
+                <option defaultValue={''}>Выберете пользователя</option>
+                { users.map(user => 
+                    <option value={user.id} key={user.id}>
+                                {`${user.firstname} ${user.lastname} ${user.surname}`}
+                    </option>) }
+            </select>
 
-    render () {
-        return (
-            <form onSubmit={(event) => this.handleSubmit(event)}>
-                <select name="id" value={this.state.id} onChange={(event)=>this.handleChange(event)}>
-                    <option selected>Выберете пользователя</option>
-                    {this.props.users.map(user => 
-                        <option value={user.id} key={user.id}>
-                            {`${user.firstname} ${user.lastname} ${user.surname}`}
-                        </option>)}
-                </select><br/>
-                <input type='text' placeholder="Название документа" 
-                    name="title" 
-                    value={this.state.title} 
-                    onChange={(event)=>this.handleChange(event)} 
-                /><br/>
-                <button type="submit">Создать заявку</button>
-            </form>
-        )
-    }
-}
+            <select name="title" value={docID} onChange={(event) => handleChange(event, setDocID)}>
+                <option defaultValue={''}>Выберете документ</option>
+                { docs.map(doc => 
+                    <option value={doc.id} key={doc.id}>
+                        {`${doc.title}`}
+                    </option>) }
+            </select>
+
+            <button type="submit">Сделать заявку</button>
+
+        </form>
+    )
+} 

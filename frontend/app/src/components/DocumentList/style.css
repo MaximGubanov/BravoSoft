@@ -22,8 +22,9 @@ td {border: 1px solid grey;}
 tr {
     transition: all 0.2s linear 0s;
 }
+tr:nth-child(even) {background-color: #e4e6fd;}
 tr:hover {
-    background-color: rgb(223, 223, 255);
+    background-color: rgb(218, 218, 254);
     transition: all 0.2s linear 0s;
 }
 
