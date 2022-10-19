@@ -18,10 +18,9 @@ const DocItem = ({doc}) => {
     return (
         <tr>
             <td>{doc.id}</td>
-            <td>{doc.title}</td>
+            <td><Link to={`/document/${doc.id}`} className='link'>{doc.title}</Link></td>
             <td>{doc.description}</td>
-            <td>{doc.subscribe_workers.length}</td>
-            {/* <td><span><a href="" onClick={del}>Удалить</a></span></td> */}
+            <td><Link to="/document/users" className='link'>{doc.subscribe_workers.length}</Link></td>
             <td><span><Link to='/' onClick={del}>Удалить</Link></span></td>
         </tr>
     )

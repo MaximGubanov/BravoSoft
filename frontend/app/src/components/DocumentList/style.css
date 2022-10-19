@@ -30,3 +30,7 @@ tr:hover {
 
 span {cursor: pointer;}
 span a:hover {color: red;} 
+
+.link:hover {
+    color: blue;
+}
