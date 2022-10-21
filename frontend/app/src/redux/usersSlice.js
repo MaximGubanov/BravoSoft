@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+const headers = {'Content-Type': 'application/json'}
 
 export const fetchUsers = createAsyncThunk(
     'users/fetchUsers',
@@ -20,9 +21,31 @@ export const fetchUsers = createAsyncThunk(
     }
 )
 
+export const createUser = createAsyncThunk(
+    'users/createUser',
+    async function ({firstname, lastname, surname}, {rejectWithValue, dispatch}) {
+        try {
+            const data = await axios.post('http://localhost:4000/user',{
+                'firstname': firstname,
+                'lastname': lastname,
+                'surname': surname,
+            }, {headers})
+                .then(response => response.data)
+                .catch(error => {
+                    console.log(error)
+                    return error
+                })
+            dispatch(fetchUsers())
+            return data
+        }
+        catch(error) {
+            return rejectWithValue(error.message)
+        }
+    }
+)
+
 export const deleteUser = createAsyncThunk(
     'users/deleteUser',
-    
 )
 
 const usersSlice = createSlice({
@@ -46,5 +69,4 @@ const usersSlice = createSlice({
     }
 })
 
-// export const { } = docsSlice.actions
 export default usersSlice.reducer

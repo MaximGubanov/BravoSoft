@@ -1,16 +1,23 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import './style.css'
 
 
 const UserItem = ({user}) => {
+
+    function del() {
+        // dispatch(deleteUser(user.id))
+        alert('В процессе реализации')
+    }
+
     return (
         <tr>
             <td>{user.id}</td>
             <td>{user.firstname}</td>
             <td>{user.lastname}</td>
             <td>{user.surname}</td>
-            <td><span><a href="http://">Удалить</a></span></td>
+            <td><span><Link to='/users' onClick={del}>Удалить</Link></span></td>
         </tr>
     )
 }

@@ -8,8 +8,8 @@ import { createDocument } from '../../redux/docsSlice'
 
 export const CreateDocumentForm = ({users}) => {
 
-    const [userID, setUserID] = useState('')
-    const [docTitle, setDocTitle] = useState('')
+    const [ userID, setUserID ] = useState('')
+    const [ docTitle, setDocTitle ] = useState('')
     const dispatch = useDispatch()
 
     function handleChange(event, setValue) {
