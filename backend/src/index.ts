@@ -38,25 +38,46 @@ app.delete('/user/:id', async (req, res) => {
     res.json(user)
 })
 
+// Получить всех активных пользователей c подписками на активные документы
 app.get('/users', async (req, res) => {
-    const users = await prisma.user.findMany({
-        where: {is_active: true}
+    const allUsers = await prisma.user.findMany({
+        where: {
+            is_active: true
+        },
+        include: {
+            subscribe_docs: {
+                where: {
+                    document: {
+                        is_active: true
+                    },
+                },
+                select: {
+                    document: true
+                },
+            },
+        },
     })
-    res.json(users)
+    res.json(allUsers)
 })
 
 app.get(`/user/:id`, async (req, res) => {
     const { id } = req.params
     const user = await prisma.user.findUnique({
-        where: { id: Number(id) },
+        where: { 
+            id: Number(id) 
+        },
         include: {
             created_docs: {
-                where: { is_active: true } 
+                where: { 
+                    is_active: true 
+                } 
             }, 
             subscribe_docs: {
-                select: {doc_id: true}
-            }
-        }
+                select: {
+                    doc_id: true
+                },
+            },
+        },
     })
     res.json(user)
 })
@@ -145,6 +166,77 @@ app.post('/request-a-doc', async (req, res) => {
     }
 })
 
+
+app.delete('/order/delete', async (req, res) => {
+    const {user_id, doc_id} = req.body
+    const rel = await prisma.documentOnUser.findFirst({
+        where: {
+            user_id: Number(user_id),
+            doc_id: Number(doc_id)
+        }
+    })
+
+    await prisma.documentOnUser.deleteMany({
+        where: {id: rel?.id}
+    })
+
+    res.json({message: `Запись с ${rel?.id} удална из таблицы`})
+})
+
+// Получить активный документ по id с подписчиками (пользователями) на этот документ
+app.get('/document/:id', async (req, res) => {
+    const {id} = req.params
+    const document = await prisma.document.findUnique({
+        where: {
+            id: Number(id)
+        },
+        include: {
+            subscribe_workers: {
+                where: {
+                    user: {
+                        is_active: true
+                    }
+                },
+                select: {
+                    user: true
+                }
+            }
+        },
+    })
+    
+    if (document?.is_active) {
+        res.json(document)
+    } 
+
+    if (!document?.is_active) {
+        res.json({message: "Документ неактвный (удалён) или не существует"})
+    }
+
+
+})
+
+// Получить все активные (не удалённые) документы с активными подписчиками (пользователями) 
+// на этот документ
+app.get('/documents', async (req, res) => {
+    const allDocument = await prisma.document.findMany({
+        where: {
+            is_active: true
+        },
+        include: {
+            subscribe_workers: {
+                where: {
+                    user: {
+                        is_active: true
+                    }
+                },
+                select: {
+                    user: true
+                }
+            }
+        }
+    })
+    res.json(allDocument)
+})
 
 app.listen(PORT, () =>
   console.log(`REST API server ready at: http://localhost:${PORT}`),

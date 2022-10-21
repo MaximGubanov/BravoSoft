@@ -1,17 +1,16 @@
 import React from 'react'
 import { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import './style.css'
 import { createDocument } from '../../redux/docsSlice'
 
 
-export const CreateDocumentForm = () => {
+export const CreateDocumentForm = ({users}) => {
 
     const [userID, setUserID] = useState('')
     const [docTitle, setDocTitle] = useState('')
     const dispatch = useDispatch()
-    const users = useSelector(state => state.users.users)
 
     function handleChange(event, setValue) {
         setValue(event.target.value)

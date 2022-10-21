@@ -1,38 +1,23 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 
 import './style.css'
-import { UserForms } from '../Forms/UserForms'
 
 
 const UserItem = ({user}) => {
     return (
         <tr>
-            <td>
-                {user.id}
-            </td>
-            <td>
-                {user.firstname}
-            </td>
-            <td>
-                {user.lastname}
-            </td>
-            <td>
-                {user.surname}
-            </td>
-            <td>
-                <span><a href="http://">Удалить</a></span>
-            </td>
+            <td>{user.id}</td>
+            <td>{user.firstname}</td>
+            <td>{user.lastname}</td>
+            <td>{user.surname}</td>
+            <td><span><a href="http://">Удалить</a></span></td>
         </tr>
     )
 }
 
-export const UserList = () => {
-    const users = useSelector(state => state.users.users)
-    
+export const UsersList = ({users}) => {
     return (
         <div className="flex-column" >
-            <UserForms />
             <table>
                 <thead>
                     <tr>

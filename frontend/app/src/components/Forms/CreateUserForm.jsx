@@ -4,7 +4,7 @@ import axios from 'axios'
 import './style.css'
 
 
-export class UserForms extends React.Component {
+export class CreateUserForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {

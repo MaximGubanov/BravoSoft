@@ -98,14 +98,14 @@ const docsSlice = createSlice({
             alert('Непредвиденная ошибка')
         },
         [makeRequestDoc.fulfilled]: (state, actions) => {
-            alert(actions.payload.message)
+            // alert(actions.payload.message)
         },
         [makeRequestDoc.rejected]: () => {
             // в доработке
             alert('Непредвиденная ошибка')
         },
         [createDocument.fulfilled]: (state, actions) => {
-            alert(actions.payload.message)
+            // alert(actions.payload.message)
         },
         [deleteDocument.fulfilled]: (state, actions) => {},
     }

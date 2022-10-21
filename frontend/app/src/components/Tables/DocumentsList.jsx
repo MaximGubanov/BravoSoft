@@ -1,14 +1,12 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import './style.css'
-import { DocumentForm } from '../Forms/DocForms'
-import { CreateDocumentForm } from '../Forms/CreateDocForm'
 import { deleteDocument } from '../../redux/docsSlice'
 
 
-const DocItem = ({doc}) => {
+const DocumentItem = ({doc}) => {
     const dispatch = useDispatch()
 
     function del() {
@@ -26,13 +24,9 @@ const DocItem = ({doc}) => {
     )
 }
 
-export const DocList = () => {
-    const docs = useSelector(state => state.docs.docs)
-    const users = useSelector(state => state.users.users)
-
+export const DocumentsList = ({documents}) => {
     return (
         <div className="flex-column">
-            <DocumentForm users={ users } />
             <table>
                 <thead>
                     <tr>
@@ -44,10 +38,9 @@ export const DocList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    { docs.map((doc) => <DocItem doc={doc} key={doc.id} />) }
+                    { documents.map((doc) => <DocumentItem doc={doc} key={doc.id} />) }
                 </tbody>
             </table>
-            <CreateDocumentForm />
         </div>
     )
 }
