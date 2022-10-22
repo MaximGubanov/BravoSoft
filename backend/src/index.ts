@@ -13,41 +13,7 @@ app.use(cors({
     origin: '*'
 }));
 
-// Создать пользователя
-app.post('/user', async (req, res) => {
-    const { firstname, lastname, surname } = req.body
-    if (firstname && lastname && surname) {
-        const result = await prisma.user.create({
-            data: { ...req.body }
-        })
-        res.json({message: 'Пользователь успешно создан', result: result})
-    } else {
-        res.json({message: 'Поля не должны быть пустыми'})
-    }
-})
-
-// Удаление пользователя, а так же удаляет заказы (связи в табл. DocumentOnUser) на документы,
-// пользователь не удаляется из табл. полностью, только меняется поле is_active в false
-app.delete('/user/:id', async (req, res) => {
-    const { id } = req.params
-
-    const deletedUser = await prisma.user.update({
-        where: {id: Number(id)},
-        data: {
-            is_active: false
-        }
-    })
-
-    await prisma.documentOnUser.deleteMany({
-        where: {
-            user_id: Number(id)
-        }
-    })
-
-    res.json({message: `Пользователь c ID: ${deletedUser.id} удален`})
-})
-
-// Получить всех активных пользователей c подписками на активные документы
+// Получает всех активных (не удалёных) пользователей c подписками на активные (не удалёные) документы
 app.get('/users', async (req, res) => {
     const allUsers = await prisma.user.findMany({
         where: {
@@ -69,6 +35,7 @@ app.get('/users', async (req, res) => {
     res.json(allUsers)
 })
 
+// Получает пользователя по его ID
 app.get(`/user/:id`, async (req, res) => {
     const { id } = req.params
     const user = await prisma.user.findUnique({
@@ -91,6 +58,130 @@ app.get(`/user/:id`, async (req, res) => {
     res.json(user)
 })
 
+// Создаёт пользователя
+app.post('/user', async (req, res) => {
+    const { firstname, lastname, surname } = req.body
+    if (firstname && lastname && surname) {
+        const result = await prisma.user.create({
+            data: { ...req.body }
+        })
+        res.json({message: 'Пользователь успешно создан', result: result})
+    } else {
+        res.json({message: 'Поля не должны быть пустыми'})
+    }
+})
+
+// Удаляет пользователя, а так же удаляет заказы (связи в табл. DocumentOnUser) на документы, 
+// сделанные этим же поль-ем, пользователь не удаляется из табл. полностью, только меняется поле is_active в false
+app.delete('/user/:id', async (req, res) => {
+    const { id } = req.params
+    const deletedUser = await prisma.user.update({
+        where: {id: Number(id)},
+        data: {
+            is_active: false
+        }
+    })
+
+    await prisma.documentOnUser.deleteMany({
+        where: {
+            user_id: Number(id)
+        }
+    })
+
+    res.json({message: `Пользователь c ID: ${deletedUser.id} удален`})
+})
+
+// Получает все активные (не удалённые) документы с активными подписчиками (пользователями) 
+// на этот документ
+app.get('/documents', async (req, res) => {
+    const allDocument = await prisma.document.findMany({
+        where: {
+            is_active: true
+        },
+        include: {
+            subscribe_workers: {
+                where: {
+                    user: {
+                        is_active: true
+                    }
+                },
+                select: {
+                    user: true
+                }
+            }
+        }
+    })
+    res.json(allDocument)
+})
+
+// Получает активный (не удалёный) документ по id с подписчиками (пользователей) на этот документ
+app.get('/document/:id', async (req, res) => {
+    const {id} = req.params
+    const document = await prisma.document.findUnique({
+        where: {
+            id: Number(id)
+        },
+        include: {
+            subscribe_workers: {
+                where: {
+                    user: {
+                        is_active: true
+                    }
+                },
+                select: {
+                    user: true
+                }
+            }
+        },
+    })
+    
+    if (document?.is_active) {
+        res.json(document)
+    } 
+
+    if (!document?.is_active) {
+        res.json({message: "Документ неактвный (удалён) или не существует", result: document})
+    }
+
+
+})
+
+// Создаёт документ
+app.post('/document', async (req, res) => {
+    const { title, created_by } = req.body
+    const result = await prisma.document.create({
+        data: {
+            "title": title,
+            "created_by": Number(created_by)
+        }
+    })
+
+    res.json({message: 'Документ успешно создан', result: result})
+})
+
+// Удаляет документ. Не удаляет запись из БД, только меняет поле is_active в false,
+// а так же удаляет связи из табл. DocumentOnUser (заказы (orders) поль-ей на этот жокумент) 
+app.delete('/document/:id', async (req, res) => {
+    const { id } = req.params
+    const deletedDocument = await prisma.document.update({
+        where: { id: Number(id) },
+        data: { is_active: false }
+    })
+
+    await prisma.documentOnUser.deleteMany({
+        where: {
+            doc_id: Number(id)
+        }
+    })
+
+    res.json({message: `Документ с ID: ${id} удалён`, result: deletedDocument})
+})
+
+
+
+
+
+// 
 app.post('/doc', async (req, res) => {
     const { title, created_by } = req.body
     const result = await prisma.document.create({
@@ -191,61 +282,6 @@ app.delete('/order/delete', async (req, res) => {
     })
 
     res.json({message: `Запись с ${rel?.id} удална из таблицы`})
-})
-
-// Получить активный документ по id с подписчиками (пользователями) на этот документ
-app.get('/document/:id', async (req, res) => {
-    const {id} = req.params
-    const document = await prisma.document.findUnique({
-        where: {
-            id: Number(id)
-        },
-        include: {
-            subscribe_workers: {
-                where: {
-                    user: {
-                        is_active: true
-                    }
-                },
-                select: {
-                    user: true
-                }
-            }
-        },
-    })
-    
-    if (document?.is_active) {
-        res.json(document)
-    } 
-
-    if (!document?.is_active) {
-        res.json({message: "Документ неактвный (удалён) или не существует"})
-    }
-
-
-})
-
-// Получить все активные (не удалённые) документы с активными подписчиками (пользователями) 
-// на этот документ
-app.get('/documents', async (req, res) => {
-    const allDocument = await prisma.document.findMany({
-        where: {
-            is_active: true
-        },
-        include: {
-            subscribe_workers: {
-                where: {
-                    user: {
-                        is_active: true
-                    }
-                },
-                select: {
-                    user: true
-                }
-            }
-        }
-    })
-    res.json(allDocument)
 })
 
 app.listen(PORT, () =>
