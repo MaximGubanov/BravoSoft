@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+import { fetchDocuments } from './docsSlice'
+
 const headers = {'Content-Type': 'application/json'}
 
 export const fetchUsers = createAsyncThunk(
@@ -46,6 +48,22 @@ export const createUser = createAsyncThunk(
 
 export const deleteUser = createAsyncThunk(
     'users/deleteUser',
+    async function (id, {rejectWithValue, dispatch}) {
+        try {
+            const data = await axios.delete(`http://localhost:4000/user/${id}`, {headers})
+                .then(response => response.data)
+                .catch(error => {
+                    console.log(error)
+                    return error
+                })
+            dispatch(fetchUsers())
+            dispatch(fetchDocuments())
+            return data
+        }
+        catch(error) {
+            return rejectWithValue(error.message)
+        }
+    }
 )
 
 const usersSlice = createSlice({

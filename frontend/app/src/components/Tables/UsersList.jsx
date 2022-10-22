@@ -1,14 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import './style.css'
+import { deleteUser } from '../../redux/usersSlice'
 
 
 const UserItem = ({user}) => {
+    const dispatch = useDispatch()
 
     function del() {
-        // dispatch(deleteUser(user.id))
-        alert('В процессе реализации')
+        dispatch(deleteUser(user.id))
     }
 
     return (

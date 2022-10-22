@@ -13,6 +13,7 @@ app.use(cors({
     origin: '*'
 }));
 
+// Создать пользователя
 app.post('/user', async (req, res) => {
     const { firstname, lastname, surname } = req.body
     if (firstname && lastname && surname) {
@@ -25,17 +26,25 @@ app.post('/user', async (req, res) => {
     }
 })
 
+// Удаление пользователя, а так же удаляет заказы (связи в табл. DocumentOnUser) на документы,
+// пользователь не удаляется из табл. полностью, только меняется поле is_active в false
 app.delete('/user/:id', async (req, res) => {
     const { id } = req.params
-    const user = await prisma.user.update({
+
+    const deletedUser = await prisma.user.update({
         where: {id: Number(id)},
         data: {
             is_active: false
-        },
-        include: {'subscribe_docs': true},
+        }
     })
 
-    res.json(user)
+    await prisma.documentOnUser.deleteMany({
+        where: {
+            user_id: Number(id)
+        }
+    })
+
+    res.json({message: `Пользователь c ID: ${deletedUser.id} удален`})
 })
 
 // Получить всех активных пользователей c подписками на активные документы
@@ -166,9 +175,10 @@ app.post('/request-a-doc', async (req, res) => {
     }
 })
 
-
+// Удаление заказа (удаляет запись из табл. DocumentOnUser)
 app.delete('/order/delete', async (req, res) => {
     const {user_id, doc_id} = req.body
+
     const rel = await prisma.documentOnUser.findFirst({
         where: {
             user_id: Number(user_id),
