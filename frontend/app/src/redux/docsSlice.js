@@ -23,7 +23,7 @@ export const makeRequestDoc = createAsyncThunk(
     'docs/makeRequestDoc',
     async function ({user_id, doc_id}, {rejectWithValue, dispatch}) {
         try {
-            const data = await axios.post('http://localhost:4000/request-a-doc',
+            const data = await axios.post('http://localhost:4000/order',
                     {
                         'user_id': user_id, 
                         'doc_id': doc_id

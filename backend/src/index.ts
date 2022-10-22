@@ -111,7 +111,11 @@ app.get('/documents', async (req, res) => {
             }
         }
     })
-    res.json(allDocument)
+
+    const key = 'subscribe_workers'
+    const sortedDocs = allDocument.sort((doc1, doc2) => doc1[key].length < doc2[key].length ? 1 : -1)
+
+    res.json(sortedDocs)
 })
 
 // Получает активный (не удалёный) документ по id с подписчиками (пользователей) на этот документ
@@ -177,62 +181,7 @@ app.delete('/document/:id', async (req, res) => {
     res.json({message: `Документ с ID: ${id} удалён`, result: deletedDocument})
 })
 
-
-
-
-
-// 
-app.post('/doc', async (req, res) => {
-    const { title, created_by } = req.body
-    const result = await prisma.document.create({
-        data: {
-            "title": title,
-            "created_by": Number(created_by)
-        }
-    })
-    res.json({message: 'Документ успешно создан', result: result})
-})
-
-app.get('/docs', async (req, res) => {
-    const docs = await prisma.document.findMany({
-        where: {
-            is_active: true
-        },
-        include: {
-            subscribe_workers: true
-        },
-    })
-    
-    const key = 'subscribe_workers'
-    const sortedDocs = docs.sort((doc1, doc2) => doc1[key].length < doc2[key].length ? 1 : -1)
-    
-    res.json(sortedDocs)
-})
-
-app.get(`/doc/:id`, async (req, res) => {
-    const { id } = req.params
-    const doc = await prisma.document.findUnique({
-        where: { id: Number(id) },
-        include: {
-            subscribe_workers: {
-                select: { user_id: true }
-            }
-        }
-    })
-    res.json(doc)
-})
-
-// не жёсткое удаление документов, просто деактивируем
-app.put(`/doc/:id`, async (req, res) => {
-    const { id } = req.params
-    const doc = await prisma.document.update({
-        where: { id: Number(id) },
-        data: { is_active: false }
-    })
-    res.json(doc)
-})
-
-app.post('/request-a-doc', async (req, res) => {
+app.post('/order', async (req, res) => {
     const { user_id, doc_id } = req.body
     
     try {
