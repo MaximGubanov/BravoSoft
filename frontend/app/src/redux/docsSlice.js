@@ -98,7 +98,7 @@ const docsSlice = createSlice({
                 state.docs = [...state.docs.reverse()]
             } else {
                 state.sortKey = actions.payload
-                state.docs = state.docs.sort((item1, item2) => item1[state.sortKey] < item2[state.sortKey] ? 1 : -1)
+                state.docs = state.docs.sort((item1, item2) => item1[state.sortKey] < item2[state.sortKey] ? -1 : 1)
             }
         },
     },

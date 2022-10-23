@@ -1,12 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import { Layout } from './components/Layout'
 import { DocumentsPage } from './pages/Documents'
 import { UsersPage } from './pages/Users'
+import { fetchUsers } from './redux/usersSlice'
 
 
 function App () {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchUsers())
+  }, [dispatch])
+
   return (
     <BrowserRouter>
       <Routes>

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import './style.css'
+import { IoSwapVertical } from 'react-icons/io5'
 import { deleteDocument } from '../../redux/docsSlice'
 import { sortDocumentByKey } from '../../redux/docsSlice'
 
@@ -27,18 +28,20 @@ const DocumentItem = ({doc}) => {
 
 export const DocumentsList = ({documents}) => {
     const dispatch = useDispatch()
+
     function sortData (key) {
         dispatch(sortDocumentByKey(key))
     }
+    
     return (
         <div className="flex-column">
             <table>
                 <thead>
                     <tr>
-                        <th onClick={() => sortData("id")}>№</th>
-                        <th onClick={() => sortData("title")}>Наименование</th>
+                        <th>№<span><IoSwapVertical onClick={() => sortData("id")}/></span></th>
+                        <th>Наименование<span><IoSwapVertical onClick={() => sortData("title")}/></span></th>
                         <th>Описание</th>
-                        <th onClick={() => sortData("subscribe_workers")}>Кол-во запросов</th>
+                        <th>Кол-во запросов<span><IoSwapVertical onClick={() => sortData("subscribe_workers")}/></span></th>
                         <th>Удалить документ</th>
                     </tr>
                 </thead>

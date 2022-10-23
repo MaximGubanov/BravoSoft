@@ -71,6 +71,7 @@ const usersSlice = createSlice({
         users: [],
         status: null,
         error: null,
+        sortKey: '',
     },
     reducers: {
         addUserToList (state, actions) {
@@ -79,6 +80,14 @@ const usersSlice = createSlice({
         removeUserFromList (state, actions) {
             const id = actions.payload
             state.users = state.users.filter(item => item.id !== id)
+        },
+        sortUserByKey(state, actions) {
+            if (state.sortKey === actions.payload) {
+                state.users = [...state.users.reverse()]
+            } else {
+                state.sortKey = actions.payload
+                state.users = state.users.sort((item1, item2) => item1[state.sortKey] < item2[state.sortKey] ? -1 : 1)
+            }
         },
     },
     extraReducers: {
@@ -94,5 +103,5 @@ const usersSlice = createSlice({
     }
 })
 
-export const { addUserToList, removeUserFromList } = usersSlice.actions
+export const { addUserToList, removeUserFromList, sortUserByKey } = usersSlice.actions
 export default usersSlice.reducer
