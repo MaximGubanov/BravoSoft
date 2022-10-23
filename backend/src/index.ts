@@ -157,6 +157,9 @@ app.post('/document', async (req, res) => {
         data: {
             "title": title,
             "created_by": Number(created_by)
+        },
+        include: {
+            subscribe_workers: true
         }
     })
 

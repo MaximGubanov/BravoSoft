@@ -53,11 +53,11 @@ export const createDocument = createAsyncThunk(
                 )
                 .then(response => response.data)
                 .catch(error => console.log(error))
-                dispatch(fetchDocuments())
+                dispatch(addDocumentToList(data.result))
                 return data
-        } catch (error) {
-            return rejectWithValue(error.message)
-        }
+            } catch (error) {
+                return rejectWithValue(error.message)
+            }
     }
 )
 
@@ -68,7 +68,7 @@ export const deleteDocument = createAsyncThunk(
             const data = await axios.delete(`http://localhost:4000/document/${id}`, {headers})
                 .then(response => response.data)
                 .catch(error => console.log(error))
-                dispatch(fetchDocuments())
+                dispatch(removeDocumentFromList(id))
                 return data
         } catch (error) {
             return rejectWithValue(error.message)
@@ -83,7 +83,15 @@ const docsSlice = createSlice({
         status: null,
         error: null,
     },
-    reducers: {},
+    reducers: {
+        addDocumentToList (state, actions) {
+            state.docs = [...state.docs, actions.payload]
+        },
+        removeDocumentFromList (state, actions) {
+            const id = actions.payload
+            state.docs = state.docs.filter(item => item.id !== id)
+        },
+    },
     extraReducers: {
         [fetchDocuments.pending]: (state) => {
             state.status = 'loading'
@@ -111,5 +119,5 @@ const docsSlice = createSlice({
     }
 })
 
-// export const {getDoc} = docsSlice.actions
+export const { addDocumentToList, removeDocumentFromList } = docsSlice.actions
 export default docsSlice.reducer
