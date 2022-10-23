@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-// import { fetchDocuments } from './docsSlice'
 
 const headers = {'Content-Type': 'application/json'}
 

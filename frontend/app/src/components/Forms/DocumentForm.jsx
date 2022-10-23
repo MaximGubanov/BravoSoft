@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import './style.css'
@@ -21,7 +20,6 @@ export const DocumentForm = () => {
     function handleSubmit(event) {
         if (userID !== undefined && docID !== undefined) {
             dispatch(makeRequestDoc({user_id: userID, doc_id: docID}))
-            console.log({user_id: userID, doc_id: docID})
         } else {
             alert('Заполните все поля')
         }

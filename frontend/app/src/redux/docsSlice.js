@@ -82,6 +82,7 @@ const docsSlice = createSlice({
         docs: [],
         status: null,
         error: null,
+        sortKey: '',
     },
     reducers: {
         addDocumentToList (state, actions) {
@@ -90,6 +91,15 @@ const docsSlice = createSlice({
         removeDocumentFromList (state, actions) {
             const id = actions.payload
             state.docs = state.docs.filter(item => item.id !== id)
+        },
+        sortDocumentByKey(state, actions) {
+            console.log(actions.payload)
+            if (state.sortKey === actions.payload) {
+                state.docs = [...state.docs.reverse()]
+            } else {
+                state.sortKey = actions.payload
+                state.docs = state.docs.sort((item1, item2) => item1[state.sortKey] < item2[state.sortKey] ? 1 : -1)
+            }
         },
     },
     extraReducers: {
@@ -119,5 +129,5 @@ const docsSlice = createSlice({
     }
 })
 
-export const { addDocumentToList, removeDocumentFromList } = docsSlice.actions
+export const { addDocumentToList, removeDocumentFromList, sortDocumentByKey } = docsSlice.actions
 export default docsSlice.reducer

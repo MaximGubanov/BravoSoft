@@ -21,7 +21,7 @@ export const DocumentsPage = () => {
 
     return (
         <>
-            <DocumentForm users={users} />    
+            <DocumentForm users={users} /> 
             <DocumentsList documents={documents} /> 
             <CreateDocumentForm users={users} />  
         </>

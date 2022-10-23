@@ -2,8 +2,6 @@ form {
     display: flex;
     gap: .5rem;
     width: 100%;
-    /* width: 400px; */
-    /* margin-right: 2rem; */
 }
 
 input {
@@ -18,12 +16,16 @@ button {
     color: white;
     background: blue;
     border-radius: 4px;
-    padding: 6px;
+    padding: 4px;
 }
 
 select {
     width: 100%;
     border: 1px solid blue;
     border-radius: 4px;
-    padding: 4px;
+    padding: 6px;
+}
+
+.sort {
+    margin-top: 1rem;
 }
