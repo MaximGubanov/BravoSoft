@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-import { fetchDocuments } from './docsSlice'
+// import { fetchDocuments } from './docsSlice'
 
 const headers = {'Content-Type': 'application/json'}
 
@@ -37,7 +37,7 @@ export const createUser = createAsyncThunk(
                     console.log(error)
                     return error
                 })
-            dispatch(fetchUsers())
+            dispatch(addUserToList(data))
             return data
         }
         catch(error) {
@@ -56,8 +56,8 @@ export const deleteUser = createAsyncThunk(
                     console.log(error)
                     return error
                 })
-            dispatch(fetchUsers())
-            dispatch(fetchDocuments())
+            dispatch(removeUserFromList(id))
+            // dispatch(fetchDocuments())
             return data
         }
         catch(error) {
@@ -73,7 +73,15 @@ const usersSlice = createSlice({
         status: null,
         error: null,
     },
-    reducers: {},
+    reducers: {
+        addUserToList (state, actions) {
+            state.users = [...state.users, actions.payload.result]
+        },
+        removeUserFromList (state, actions) {
+            const id = actions.payload
+            state.users = state.users.filter(item => item.id !== id)
+        },
+    },
     extraReducers: {
         [fetchUsers.pending]: (state) => {
             state.status = 'loading'
@@ -87,4 +95,5 @@ const usersSlice = createSlice({
     }
 })
 
+export const { addUserToList, removeUserFromList } = usersSlice.actions
 export default usersSlice.reducer

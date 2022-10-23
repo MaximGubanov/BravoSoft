@@ -63,7 +63,13 @@ app.post('/user', async (req, res) => {
     const { firstname, lastname, surname } = req.body
     if (firstname && lastname && surname) {
         const result = await prisma.user.create({
-            data: { ...req.body }
+            data: {
+                ...req.body
+            },
+            include: {
+                created_docs: true, 
+                subscribe_docs: true,
+            },
         })
         res.json({message: 'Пользователь успешно создан', result: result})
     } else {
