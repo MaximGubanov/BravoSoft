@@ -204,9 +204,9 @@ app.post('/order', async (req, res) => {
         if (document == null) {
             res.json({message: `Такой документ не существует`})
         }
-
+        
         const subscribers = document?.subscribe_workers
-        const subscriber = subscribers?.filter(item => item.user_id == user_id)
+        const subscriber = subscribers?.filter((item: any) => item.user_id == user_id)
         
         if (subscriber?.length) {
             res.json({message: 'Вы уже делали заявку на этот документ'})
