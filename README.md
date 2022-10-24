@@ -12,7 +12,7 @@
 ***FRONTEND***:
 
 
-    React.js, Axios
+    React.js, Redux
 
 
 ## Как запустить?

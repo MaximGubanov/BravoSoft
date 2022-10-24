@@ -6,6 +6,7 @@ import { Layout } from './components/Layout'
 import { DocumentsPage } from './pages/Documents'
 import { UsersPage } from './pages/Users'
 import { fetchUsers } from './redux/usersSlice'
+import { DocumentPage } from './pages/Document'
 
 
 function App () {
@@ -20,8 +21,8 @@ function App () {
       <Routes>
         <Route path='/' element={ <Layout /> }>
           <Route index element={ <DocumentsPage /> } />
-          {/* <Route path='/document/:id' element={ <Document /> } />
-          <Route path='/document/users' element={ <DocumentUsers /> } /> */}
+          <Route path='/document/:id' element={ <DocumentPage /> } />
+          {/* <Route path='/document/users' element={ <DocumentUsers /> } /> */}
           <Route path='/users' element={ <UsersPage /> } />
         </Route>
       </Routes>

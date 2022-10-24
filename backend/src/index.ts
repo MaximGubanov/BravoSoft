@@ -102,7 +102,7 @@ app.delete('/user/:id', async (req, res) => {
 app.get('/documents', async (req, res) => {
     const allDocument = await prisma.document.findMany({
         where: {
-            is_active: true
+            is_active: true,
         },
         include: {
             subscribe_workers: {
@@ -113,9 +113,9 @@ app.get('/documents', async (req, res) => {
                 },
                 select: {
                     user: true
-                }
-            }
-        }
+                },
+            },
+        },
     })
 
     const key = 'subscribe_workers'
