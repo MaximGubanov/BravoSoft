@@ -17,10 +17,10 @@ const UserItem = ({user}) => {
 
     return (
         <tr>
-            <td>{user.id}</td>
-            <td>{user.firstname}</td>
-            <td>{user.lastname}</td>
-            <td>{user.surname}</td>
+            <td><Link to={`/user/${user.id}`} className='link'>{user.id}</Link></td>
+            <td><Link to={`/user/${user.id}`} className='link'>{user.firstname}</Link></td>
+            <td><Link to={`/user/${user.id}`} className='link'>{user.lastname}</Link></td>
+            <td><Link to={`/user/${user.id}`} className='link'>{user.surname}</Link></td>
             <td><span><Link to='/users' onClick={del}>Удалить</Link></span></td>
         </tr>
     )
