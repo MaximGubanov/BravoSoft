@@ -118,10 +118,10 @@ app.get('/documents', async (req, res) => {
         },
     })
 
-    const key = 'subscribe_workers'
-    const sortedDocs = allDocument.sort((doc1, doc2) => doc1[key].length < doc2[key].length ? 1 : -1)
+    // const key = 'subscribe_workers'
+    // const sortedDocs = allDocument.sort((doc1, doc2) => doc1[key].length < doc2[key].length ? 1 : -1)
 
-    res.json(sortedDocs)
+    res.json(allDocument)
 })
 
 // Получает активный (не удалёный) документ по id с подписчиками (пользователей) на этот документ
