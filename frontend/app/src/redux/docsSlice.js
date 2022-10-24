@@ -8,7 +8,7 @@ export const fetchDocuments = createAsyncThunk(
     'docs/fetchDocuments',
     async function () {
         try {
-            const data = await axios.get('http://localhost:4000/documents')
+            const data = await axios.get('http://194.61.0.120:4000/documents')
                 .then(response => response.data)
                 .catch(error => {console.log(error)})
             return data
@@ -23,7 +23,7 @@ export const makeRequestDoc = createAsyncThunk(
     'docs/makeRequestDoc',
     async function ({user_id, doc_id}, {rejectWithValue, dispatch}) {
         try {
-            const data = await axios.post('http://localhost:4000/order',
+            const data = await axios.post('http://194.61.0.120:4000/order',
                     {
                         'user_id': user_id, 
                         'doc_id': doc_id
@@ -44,7 +44,7 @@ export const createDocument = createAsyncThunk(
     'docs/createDocument',
     async function ({user_id, doc_title}, {rejectWithValue, dispatch}) {
         try {
-            const data = await axios.post('http://localhost:4000/document',
+            const data = await axios.post('http://194.61.0.120:4000/document',
                     {
                         'title': doc_title, 
                         'created_by': user_id
@@ -65,7 +65,7 @@ export const deleteDocument = createAsyncThunk(
     'docs/deleteDocument',
     async function (id, {rejectWithValue, dispatch}) {
         try {
-            const data = await axios.delete(`http://localhost:4000/document/${id}`, {headers})
+            const data = await axios.delete(`http://194.61.0.120:4000/document/${id}`, {headers})
                 .then(response => response.data)
                 .catch(error => console.log(error))
                 dispatch(removeDocumentFromList(id))
