@@ -8,7 +8,7 @@ export const fetchUsers = createAsyncThunk(
     'users/fetchUsers',
     async function () {
         try {
-            const data = await axios.get('http://194.61.0.120:4000/users')
+            const data = await axios.get('http://0.0.0.0:4000/users')
                 .then(response => response.data)
                 .catch(error => {
                     console.log(error)
@@ -26,7 +26,7 @@ export const createUser = createAsyncThunk(
     'users/createUser',
     async function ({firstname, lastname, surname}, {rejectWithValue, dispatch}) {
         try {
-            const data = await axios.post('http://194.61.0.120:4000/user',{
+            const data = await axios.post('http://0.0.0.0:4000/user',{
                 'firstname': firstname,
                 'lastname': lastname,
                 'surname': surname,
@@ -49,7 +49,7 @@ export const deleteUser = createAsyncThunk(
     'users/deleteUser',
     async function (id, {rejectWithValue, dispatch}) {
         try {
-            const data = await axios.delete(`http://194.61.0.120:4000/user/${id}`, {headers})
+            const data = await axios.delete(`http://0.0.0.0:4000/user/${id}`, {headers})
                 .then(response => response.data)
                 .catch(error => {
                     console.log(error)

@@ -15,7 +15,7 @@ services:
     build: ./backend
     ports: 
       - 4000:4000
-    command: npx prisma generate && npm start
+    command: npm start
     depends_on:
       - postgres
   frontend: 

@@ -17,23 +17,17 @@
 
 ## Как запустить?
 
-    Postgres существует в виде docker-контейнера.
+    Просто перейдите в директорию BravoSoft и выполните:
+
         $ cd BravoSoft
-        $ docker-compose up -d
+        $ docker-compose up --build
+
+    Затем перейдите в браузер по ссылке http://localhost:8888
 
         Имя БД - postgres
         Пользователь - user
         Пароль - user
         Порт - 5432
 
-    FrontEnd:
-        $ cd frontend/app
-        $ npm install (установить зависимости)
-        $ npm start
-    
-    BackEnd:
-        $ cd backend
-        $ npm install (установить зависимости)
-        $ npm run serve
 
    
