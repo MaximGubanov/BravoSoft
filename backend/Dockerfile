@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:16
 
 RUN mkdir -p /usr/src/app/
 
@@ -12,4 +12,4 @@ COPY . /usr/src/app/
 
 EXPOSE 4000
 
-CMD ["npm", "start"]
+CMD ["npm", "generate_client"]
