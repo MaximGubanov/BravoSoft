@@ -15,12 +15,13 @@ services:
     build: ./backend
     ports: 
       - 4000:4000
-    command: npm start -a 0.0.0.0
+    command: npm start
     # depends_on:
     #   - postgres
   frontend: 
     build: ./frontend/app
     ports:
-      - 8888:80
+      - 3333:3000
+    command: npm start
     depends_on:
       - backend

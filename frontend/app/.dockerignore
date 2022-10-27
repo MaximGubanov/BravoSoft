@@ -1,0 +1,4 @@
+frontend/app/node_modules
+frontend/app/.dockerignore
+frontend/app/Dockerfile
+frontend/app/README.md
