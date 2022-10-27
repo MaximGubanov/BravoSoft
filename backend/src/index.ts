@@ -118,10 +118,10 @@ app.get('/documents', async (req, res) => {
         },
     })
 
-    // const key = 'subscribe_workers'
-    // const sortedDocs = allDocument.sort((doc1, doc2) => doc1[key].length < doc2[key].length ? 1 : -1)
+    const key: string = 'subscribe_workers'
+    const sortedDocs = allDocument.sort((doc1: any, doc2: any) => doc1[key].length < doc2[key].length ? 1 : -1)
 
-    res.json(allDocument)
+    res.json(sortedDocs)
 })
 
 // Получает активный (не удалёный) документ по id с подписчиками (пользователей) на этот документ
@@ -190,6 +190,7 @@ app.delete('/document/:id', async (req, res) => {
     res.json({message: `Документ с ID: ${id} удалён`, result: deletedDocument})
 })
 
+// Создаёт заказ (связь между таблицами users и documents)
 app.post('/order', async (req, res) => {
     const { user_id, doc_id } = req.body
     
