@@ -10,7 +10,8 @@ RUN npm install
 
 COPY . /usr/src/app/
 
-RUN npx prisma generate
+# RUN npx prisma generate
+RUN npx prisma migrate dev --name init 
 
 EXPOSE 4000
 
