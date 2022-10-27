@@ -10,6 +10,8 @@ RUN npm install
 
 COPY . /usr/src/app/
 
+RUN npx prisma generate
+
 EXPOSE 4000
 
-CMD ["npm", "generate_client"]
+CMD ["npm", "start"]
