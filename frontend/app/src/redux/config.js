@@ -1,7 +1,7 @@
 export const address = () => {
     return(
         {
-            'URL': 'http://localhost',
+            'URL': 'http://0.0.0.0',
             'PORT': 4000
         }
     )

@@ -11,6 +11,8 @@ import { deleteUser } from '../../redux/usersSlice'
 const UserItem = ({user}) => {
     const dispatch = useDispatch()
 
+    console.log('UserItem', user)
+
     function del() {
         dispatch(deleteUser(user.id))
     }

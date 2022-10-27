@@ -14,6 +14,7 @@ export const fetchDocuments = createAsyncThunk(
             const data = await axios.get(`${URL}:${PORT}/documents`)
                 .then(response => response.data)
                 .catch(error => {console.log(error)})
+            console.log('fetchDocuments: ', data)
             return data
         }
         catch(err) {

@@ -29,6 +29,8 @@ const DocumentItem = ({doc}) => {
 export const DocumentsList = ({documents}) => {
     const dispatch = useDispatch()
 
+    console.log('DocumentsList: ', documents)
+
     function sortData (key) {
         dispatch(sortDocumentByKey(key))
     }

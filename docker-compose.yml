@@ -15,7 +15,7 @@ services:
     build: ./backend
     ports: 
       - 4000:4000
-    command: npm start -a 0.0.0.0 
+    command: npm start 
     depends_on:
       - db_engine
   frontend: 
