@@ -1,10 +1,12 @@
 # BravoSoft
 
+# http://194.61.0.120:8888/ - ресурс с готовым ТЗ
+
 ## Описание
 ***BACKEND***: 
 
 
-    Express.js - для реализации API
+    Express.js, TypeScript, cors - для реализации API
     Prisma ORM - для работы с БД
     Postgres - СУБД
 
@@ -12,22 +14,25 @@
 ***FRONTEND***:
 
 
-    React.js, Redux
+    React.js, Redux, axios, react-router-dom, styled-components
 
 
-## Как запустить?
+## Как запустить локально?
 
-    Просто перейдите в директорию BravoSoft и выполните:
+    Клонируйте проект к себе на ПК:
+    
+        $ git clone https://github.com/MaximGubanov/BravoSoft.git
+    
+        Перейдите в директорию BravoSoft:
 
         $ cd BravoSoft
-        $ docker-compose up --build
+    
+    Затем выполните:
+    
+        $ sudo docker-compose up --build
 
-    Затем перейдите в браузер по ссылке http://localhost:8888
+    Перейдите в браузер по ссылке http://localhost:8888
 
-        Имя БД - postgres
-        Пользователь - user
-        Пароль - user
-        Порт - 5432
+    Готово!
 
-
-   
+    Примечание: БД работает отдельно в Docker-контейнере   
